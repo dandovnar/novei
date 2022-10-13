@@ -1,0 +1,7 @@
+.multishipping-authorization .authentication.message {
+    margin: 2em 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-shadow: 0px 1px 3px 0px #ccc;
+    padding: 1em 2em 1em 2em;
+}
