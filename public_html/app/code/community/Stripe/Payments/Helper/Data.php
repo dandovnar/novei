@@ -1164,11 +1164,6 @@ class Stripe_Payments_Helper_Data extends Mage_Payment_Helper_Data
 		$params['payment_method'] = \Stripe\PaymentMethod::create($pp);
 		$params['payment_method_types'] = ['card', 'affirm', 'afterpay_clearpay']; // For now
 
-		$params["metadata"] = array(
-			"Order #" => "18-755",
-		);
-		$params["description"] = "Order #18-755";
-
 		$params['shipping'] = array(
 				"address" => array(
 						"city" => $address->getCity(),

@@ -4,10 +4,10 @@ class Stripe_Payments_Model_Method_Api_Sources extends Mage_Payment_Model_Method
 {
 		protected $_isInitializeNeeded      = false;
 		protected $_canUseForMultishipping  = false;
-		protected $_isGateway               = true;
+		protected $_isGateway               = false;
 		protected $_canAuthorize            = true;
-		protected $_canCapture              = false;
-		protected $_canCapturePartial       = false;
+		protected $_canCapture              = true;
+		protected $_canCapturePartial       = true;
 		protected $_canRefund               = true;
 		protected $_canRefundInvoicePartial = true;
 		protected $_canVoid                 = true;
@@ -47,7 +47,7 @@ class Stripe_Payments_Model_Method_Api_Sources extends Mage_Payment_Model_Method
 
 		public function authorize(Varien_Object $payment, $amount)
 		{
-				parent::authorize($payment, $amount);
+				//parent::authorize($payment, $amount);
 
 				if ($amount > 0)
 				{
@@ -85,8 +85,8 @@ class Stripe_Payments_Model_Method_Api_Sources extends Mage_Payment_Model_Method
 								}
 
 								$pp['type'] = 'affirm';
-								//$params['payment_method_types'] = ['card', 'affirm', 'afterpay_clearpay']; // For now
-								//$params['payment_method'] = \Stripe\PaymentMethod::create($pp);
+								$params['payment_method_types'] = ['card', 'affirm', 'afterpay_clearpay']; // For now
+								$params['payment_method'] = \Stripe\PaymentMethod::create($pp);
 
 								$source = \Stripe\PaymentIntent::update(Mage::getSingleton("stripe_payments/paymentIntent")->loadFromCache($quote)->id,$params);
 

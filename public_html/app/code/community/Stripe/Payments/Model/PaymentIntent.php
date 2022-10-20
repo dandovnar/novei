@@ -113,7 +113,7 @@ class Stripe_Payments_Model_PaymentIntent
 				else
 						$this->loadFromCache($quote);
 
-				if ($this->params['amount'] == 0)
+				if (!isset($this->params['amount']) || $this->params['amount'] == 0)
 						return null;
 
 				if (!$this->paymentIntent)
@@ -174,6 +174,7 @@ class Stripe_Payments_Model_PaymentIntent
 				$this->params['currency'] = strtolower($currency);
 				$this->params['capture_method'] = $this->getCaptureMethod();
 				$this->params['payment_method_types'] = ['card', 'affirm', 'afterpay_clearpay']; // For now
+
 
 				$statementDescriptor = Mage::getStoreConfig('payment/stripe_payments/statement_descriptor');
 				if (!empty($statementDescriptor))
