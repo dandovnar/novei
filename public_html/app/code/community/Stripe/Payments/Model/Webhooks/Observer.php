@@ -411,6 +411,40 @@ class Stripe_Payments_Model_Webhooks_Observer
         $this->chargeFailed($observer);
     }
 
+    /**********
+     * Affirm *
+     **********/
+
+    // source.chargeable
+    public function stripe_payments_webhook_source_chargeable_affirm($observer)
+    {
+        $this->authorizationSucceeded($observer);
+    }
+
+    // source.canceled
+    public function stripe_payments_webhook_source_canceled_affirm($observer)
+    {
+        $this->sourceCancelled($observer);
+    }
+
+    // source.failed
+    public function stripe_payments_webhook_source_failed_affirm($observer)
+    {
+        $this->authorizationFailed($observer);
+    }
+
+    // charge.succeeded
+    public function stripe_payments_webhook_charge_succeeded_affirm($observer)
+    {
+        $this->chargeSucceeded($observer);
+    }
+
+    // charge.failed
+    public function stripe_payments_webhook_charge_failed_affirm($observer)
+    {
+        $this->chargeFailed($observer);
+    }
+
     /**************
      * WeChat Pay *
      **************/

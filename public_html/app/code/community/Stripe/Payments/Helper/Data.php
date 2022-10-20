@@ -354,8 +354,6 @@ class Stripe_Payments_Helper_Data extends Mage_Payment_Helper_Data
             $description = "Order #" . $order->getRealOrderId().' by ' . $customerName;
 
         $params = array(
-          "amount" => round($amount * $cents),
-          "currency" => $currency,
           "description" => $description,
           "metadata" => $metadata
         );
@@ -1144,4 +1142,51 @@ class Stripe_Payments_Helper_Data extends Mage_Payment_Helper_Data
 
         return $metadata;
     }
+
+	public function upd()
+	{
+		$quote = Mage::getModel('checkout/cart')->getQuote();
+		$address = $quote->getBillingAddress();
+		$street = $address->getStreet();
+		$pp['type'] = 'affirm';
+		$pp['billing_details'] = array(
+			"address" => array(
+					"city" => $address->getCity(),
+					"country" => $address->getCountryId(),
+					"line1" => $street[0],
+					"line2" => (!empty($street[1]) ? $street[1] : null),
+					"postal_code" => $address->getPostcode(),
+					"state" => $address->getRegion()
+			),
+			"name" => $address->getFirstname() . " " . $address->getLastname(),
+			"phone" => $address->getTelephone(),
+		);
+		$params['payment_method'] = \Stripe\PaymentMethod::create($pp);
+		$params['payment_method_types'] = ['card', 'affirm', 'afterpay_clearpay']; // For now
+
+		$params["metadata"] = array(
+			"Order #" => "18-755",
+		);
+		$params["description"] = "Order #18-755";
+
+		$params['shipping'] = array(
+				"address" => array(
+						"city" => $address->getCity(),
+						"country" => $address->getCountryId(),
+						"line1" => $street[0],
+						"line2" => (!empty($street[1]) ? $street[1] : null),
+						"postal_code" => $address->getPostcode(),
+						"state" => $address->getRegion()
+				),
+				"carrier" => null,
+				"name" => $address->getFirstname() . " " . $address->getLastname(),
+				"phone" => $address->getTelephone(),
+				"tracking_number" => null
+			);
+
+		$id = Mage::getSingleton("stripe_payments/paymentIntent")->loadFromCache($quote)->id;
+		$pi = \Stripe\PaymentIntent::update($id,$params);
+
+		return $pi;
+	}
 }

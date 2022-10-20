@@ -46,6 +46,18 @@
 			</llapgoch_basicpayment_setup>
 		</resources>
 	</global>
+
+	<frontend>
+		<routers>
+			<llapgoch_basicpayment>
+				<use>standard</use>
+				<args>
+					<module>Llapgoch_BasicPayment</module>
+					<frontName>basicpayment</frontName>
+				</args>
+			</llapgoch_basicpayment>
+		</routers>
+	</frontend>
 	
 	<default>
 		<payment>

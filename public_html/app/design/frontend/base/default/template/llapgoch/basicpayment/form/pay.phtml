@@ -6,35 +6,17 @@
 	$_code = $this->getMethod()->getCode();
 	$total = Mage::getModel('checkout/session')->getQuote()->getBaseGrandTotal();
 ?>
-<div id="affirm-message" data-currency="<?php echo Mage::app()->getStore()->getBaseCurrencyCode();?>" data-total="<?php echo str_replace(".", "", (float)$total);?>"></div>
-<script src="https://js.stripe.com/v3/"></script>
 <script>
-	var stripe = Stripe('pk_test_7qWDequDpGDOELF5iUDQX2Rs');
-	var element = stripe.elements({clientSecret: document.querySelector('.stripe-payment').id});
-	var total = documents.getElementById('affirm-message').getAttribute('data-total');
-	var total_currency = document.getElementById('affirm-message').getAttribute('data-currency');
-	var options = {
-		amount: Number(total), // $50.00 USD
-		currency: total_currency
-	};
-
-	var affirmMessageElement = elements.create('affirmMessage', options);
-	affirmMessageElement.mount('#affirm-message');
-
-	if ($('amscheckout-submit')){
-		stripe.confirmAffirmPayment(
-			document.querySelector('.stripe-payment').id,
-			{
-				return_url: 'https://www.noveistudio.com/checkout/onepage/success',
-			}
-		).then(function(result) {
-			if (result.error) {
-				// Inform the customer that there was an error.
-				console.log(result.error.message);
-			}
-		});
+	var affirm = document.getElementById('p_method_llapgoch_pay');
+	if (affirm.checked) {
+		new Ajax.Request(
+				'/basicpayment/index/', {
+						method: 'post',
+						onComplete: function (response)
+						{
+								console.log('hi');
+						}
+				}
+		);
 	}
 </script>
-<style>
-	dt#dt_method_llapgoch_pay, dd#dt_method_llapgoch_pay {display: none;}
-</style>

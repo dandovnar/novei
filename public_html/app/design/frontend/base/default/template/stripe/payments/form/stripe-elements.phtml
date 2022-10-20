@@ -1,4 +1,9 @@
+<?php 
+$quote = Mage::getModel('checkout/cart')->getQuote();
+?>
 <li class="stripe-new stripe-payments-elements">
+	<div class="stripe-payment" id="<?php echo Mage::getSingleton("stripe_payments/paymentIntent")->create()->getClientSecret()?>"></div>
+	<div id="<?php echo Mage::getSingleton("stripe_payments/paymentIntent")->loadFromCache($quote)->id?>"></div>
   <label for="card-number" id="card-details-label">
     <?php echo Mage::helper('payment')->__('Enter your card details:') ?>
   </label>
@@ -27,3 +32,23 @@
     </div>
   </div>
 </li>
+<?php 
+?>
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+		jQuery(document).on('change', 'input[name^="billing"]', function() {
+			var firstname = jQuery('input[name="billing[firstname]"]').val();
+			var lastname = jQuery('input[name="billing[lastname]"]').val();
+			var company = jQuery('input[name="billing[company]"]').val();
+			var email = jQuery('input[name="billing[email]"]').val();
+			var phone = jQuery('input[name="billing[telephone]"]').val();
+			var address = jQuery('input[name="billing[street][]"]').val();
+			var city = jQuery('input[name="billing[city]"]').val();
+			jQuery.ajax({
+				url: '/stripe/verification/savebilling/',
+				data: {firstname: firstname, lastname: lastname, company: company, email: email, phone: phone, address: address, city: city},
+				type: 'post',
+			})
+		});
+	});
+</script>

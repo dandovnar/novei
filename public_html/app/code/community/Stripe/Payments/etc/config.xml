@@ -534,6 +534,53 @@
         </observers>
       </stripe_payments_webhook_charge_failed_alipay>
 
+      <!-- Affirm -->
+      <stripe_payments_webhook_source_chargeable_affirm>
+        <observers>
+          <stripe_payments_webhook_source_chargeable_affirm>
+            <type>singleton</type>
+            <class>stripe_payments/webhooks_observer</class>
+            <method>stripe_payments_webhook_source_chargeable_affirm</method>
+          </stripe_payments_webhook_source_chargeable_affirm>
+        </observers>
+      </stripe_payments_webhook_source_chargeable_affirm>
+      <stripe_payments_webhook_source_canceled_affirm>
+        <observers>
+          <stripe_payments_webhook_source_canceled_affirm>
+            <type>singleton</type>
+            <class>stripe_payments/webhooks_observer</class>
+            <method>stripe_payments_webhook_source_canceled_affirm</method>
+          </stripe_payments_webhook_source_canceled_affirm>
+        </observers>
+      </stripe_payments_webhook_source_canceled_affirm>
+      <stripe_payments_webhook_source_failed_affirm>
+        <observers>
+          <stripe_payments_webhook_source_failed_affirm>
+            <type>singleton</type>
+            <class>stripe_payments/webhooks_observer</class>
+            <method>stripe_payments_webhook_source_failed_affirm</method>
+          </stripe_payments_webhook_source_failed_affirm>
+        </observers>
+      </stripe_payments_webhook_source_failed_affirm>
+      <stripe_payments_webhook_charge_succeeded_affirm>
+        <observers>
+          <stripe_payments_webhook_charge_succeeded_affirm>
+            <type>singleton</type>
+            <class>stripe_payments/webhooks_observer</class>
+            <method>stripe_payments_webhook_charge_succeeded_affirm</method>
+          </stripe_payments_webhook_charge_succeeded_affirm>
+        </observers>
+      </stripe_payments_webhook_charge_succeeded_affirm>
+      <stripe_payments_webhook_charge_failed_affirm>
+        <observers>
+          <stripe_payments_webhook_charge_failed_affirm>
+            <type>singleton</type>
+            <class>stripe_payments/webhooks_observer</class>
+            <method>stripe_payments_webhook_charge_failed_affirm</method>
+          </stripe_payments_webhook_charge_failed_affirm>
+        </observers>
+      </stripe_payments_webhook_charge_failed_affirm>
+
       <!-- WeChat Pay -->
       <stripe_payments_webhook_source_chargeable_wechat>
         <observers>
@@ -777,6 +824,17 @@
         <allowed_currencies>AUD,CAD,EUR,GBP,HKD,JPY,NZD,SGD,USD</allowed_currencies>
         <sort_order>2</sort_order>
       </stripe_payments_alipay>
+      <stripe_payments_affirm>
+        <model>stripe_payments/method_affirm</model>
+        <active>1</active>
+        <title>Affirm</title>
+        <payment_action>authorize</payment_action>
+        <order_status>pending</order_status>
+        <allowspecific>0</allowspecific>
+        <allow_currencies>0</allow_currencies>
+        <allowed_currencies>AUD,CAD,EUR,GBP,HKD,JPY,NZD,SGD,USD</allowed_currencies>
+        <sort_order>2</sort_order>
+      </stripe_payments_affirm>
       <stripe_payments_wechat>
         <model>stripe_payments/method_wechat</model>
         <active>1</active>
