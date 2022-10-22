@@ -487,14 +487,7 @@ var stripe = {
 		cardCvc.mount('#stripe-payments-card-cvc');
 		cardCvc.addEventListener('change', stripe.stripeElementsOnChange);
 
-		var total = document.getElementById('affirm-message').getAttribute('data-total');
-		var total_currency = document.getElementById('affirm-message').getAttribute('data-currency');
-		var options = {
-			amount: Number(total), // $50.00 USD
-			currency: total_currency
-		};
-		var affirmMessageElement = elements.create('affirmMessage', options);
-		affirmMessageElement.mount('#affirm-message');
+		
 
 		var clientSecret = new URLSearchParams(window.location.search).get(
 			'payment_intent_client_secret'
@@ -1370,13 +1363,13 @@ affirm.onclick = function (e) {
 	jQuery(button).replaceWith(affirm_button);
 	jQuery(document).on('click', '.affirm-payment', function () {
 
-			stripe.stripeJsV3.confirmAffirmPayment(
-				secret,
-				{
-					payment_method: { type: 'affirm', billing_details: stripe.getSourceOwner(), },
-					return_url: 'https://www.noveistudio.com/checkout/onepage/',
-				},
-			);
+		stripe.stripeJsV3.confirmAffirmPayment(
+			secret,
+			{
+				payment_method: { type: 'affirm', billing_details: stripe.getSourceOwner(), },
+				return_url: 'https://www.noveistudio.com/checkout/onepage/',
+			},
+		);
 
 	});
 };

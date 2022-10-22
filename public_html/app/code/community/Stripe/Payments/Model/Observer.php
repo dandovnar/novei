@@ -21,7 +21,7 @@ class Stripe_Payments_Model_Observer
         }
 
         // Add this comment to all orders except card payments, PRAPI payments and ACH payments
-        if (!in_array($payment->getMethod(), array("stripe_payments", "stripe_payments_ach")))
+        if (!in_array($payment->getMethod(), array("stripe_payments", "stripe_payments_ach", "stripe_payments_affirm")))
         {
             $comment = Mage::helper("stripe_payments")->__("The customer has been redirected for payment authorization, pending authorization outcome.");
             $order->addStatusToHistory($status = false, $comment, $isCustomerNotified = false);

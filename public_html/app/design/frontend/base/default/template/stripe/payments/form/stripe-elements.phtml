@@ -1,9 +1,5 @@
-<?php 
-$quote = Mage::getModel('checkout/cart')->getQuote();
-?>
 <li class="stripe-new stripe-payments-elements">
 	<div class="stripe-payment" id="<?php echo Mage::getSingleton("stripe_payments/paymentIntent")->create()->getClientSecret()?>"></div>
-	<div id="<?php echo Mage::getSingleton("stripe_payments/paymentIntent")->loadFromCache($quote)->id?>"></div>
   <label for="card-number" id="card-details-label">
     <?php echo Mage::helper('payment')->__('Enter your card details:') ?>
   </label>

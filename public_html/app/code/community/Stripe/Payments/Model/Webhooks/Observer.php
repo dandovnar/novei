@@ -42,6 +42,14 @@ class Stripe_Payments_Model_Webhooks_Observer
         Mage::helper('stripe_payments/webhooks')->refund($order, $object);
     }
 
+		public function stripe_payments_webhook_charge_refunded_affirm($observer)
+		{
+				$event = $observer->getEvent();
+				$object = $observer->getObject();
+				$order = Mage::helper('stripe_payments/webhooks')->loadOrderFromEvent($event);
+				Mage::helper('stripe_payments/webhooks')->refund($order, $object);
+		}
+
     public function addOrderCommentWithEmail($order, $comment)
     {
         $order->addStatusToHistory($status = false, $comment, $isCustomerNotified = true);
@@ -444,14 +452,6 @@ class Stripe_Payments_Model_Webhooks_Observer
     {
         $this->chargeFailed($observer);
     }
-
-		public function stripe_payments_webhook_charge_refunded_affirm($observer)
-		{
-				$event = $observer->getEvent();
-				$object = $observer->getObject();
-				$order = Mage::helper('stripe_payments/webhooks')->loadOrderFromEvent($event);
-				Mage::helper('stripe_payments/webhooks')->refund($order, $object);
-		}
 
     /**************
      * WeChat Pay *

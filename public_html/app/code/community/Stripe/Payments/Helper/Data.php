@@ -354,6 +354,8 @@ class Stripe_Payments_Helper_Data extends Mage_Payment_Helper_Data
             $description = "Order #" . $order->getRealOrderId().' by ' . $customerName;
 
         $params = array(
+          "amount" => round($amount * $cents),
+          "currency" => $currency,
           "description" => $description,
           "metadata" => $metadata
         );
@@ -1163,7 +1165,17 @@ class Stripe_Payments_Helper_Data extends Mage_Payment_Helper_Data
 		);
 		$params['payment_method'] = \Stripe\PaymentMethod::create($pp);
 		$params['payment_method_types'] = ['card', 'affirm', 'afterpay_clearpay']; // For now
-
+		$lastOrder = Mage::getModel('sales/order')->getCollection()
+					 ->setOrder('entity_id','DESC')
+					 ->setPageSize(1)
+					 ->getFirstItem();
+		$str = str_replace("-","",$lastOrder->getIncrementId())+1;
+		$newOrder = substr($str, 0, 2) . '-' . substr($str, 2);
+		$params["metadata"] = array(
+			"Order #" => $newOrder,
+			"type" => "affirm",
+		);
+		$params["description"] = "Order #" . $newOrder;
 		$params['shipping'] = array(
 				"address" => array(
 						"city" => $address->getCity(),

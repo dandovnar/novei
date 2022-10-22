@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <DanDovnar_StripeAdds>
+      <active>true</active>
+      <codePool>local</codePool>
+      <version>0.1.0</version>
+    </DanDovnar_StripeAdds>
+  </modules>
+</config>

@@ -26,8 +26,8 @@ class Stripe_Payments_Helper_Webhooks extends Mage_Payment_Helper_Data
 
             $eventType = "stripe_payments_webhook_" . str_replace(".", "_", $event['type']);
 
-            if (isset($event['data']['object']['type'])) // Bancontact, Giropay, iDEAL
-                $eventType .= "_" . $event['data']['object']['type'];
+            if (isset($event['data']['object']['metadata']['type'])) // Affirm
+                $eventType .= "_" . $event['data']['object']['metadata']['type'];
             else if (isset($event['data']['object']['source']['type'])) // SOFORT and SEPA
                 $eventType .= "_" . $event['data']['object']['source']['type'];
             else if (isset($event['data']['object']['source']['object'])) // ACH bank accounts
